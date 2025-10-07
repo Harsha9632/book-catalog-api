@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
 const User   = require('../models/User');
 
-
 exports.register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -23,24 +22,19 @@ exports.register = async (req, res, next) => {
     const user   = await User.create({ name, email, password: hashed });
 
     
-    res.statusMessage = 'Created with user details';
-
-    
-    res
-      .status(201)
-      .json({
-        success: true,
-        data: {
-          id:    user._id,
-          name:  user.name,
-          email: user.email
-        }
-      });
+    return res.status(201).json({
+      message: "201 Created with user details",
+      success: true,
+      data: {
+        id:    user._id,
+        name:  user.name,
+        email: user.email
+      }
+    });
   } catch (err) {
     next(err);
   }
 };
-
 
 exports.login = async (req, res, next) => {
   try {
@@ -72,17 +66,14 @@ exports.login = async (req, res, next) => {
     );
 
     
-    res.statusMessage = 'OK with JWT token';
-
-    
-    return res
-      .status(200)
-      .json({
-        success: true,
-        token
-      });
+    return res.status(200).json({
+      message: "200 OK with JWT token",
+      success: true,
+      token
+    });
   } catch (err) {
     next(err);
   }
 };
+
 
