@@ -22,8 +22,16 @@ exports.register = async (req, res, next) => {
     const user   = await User.create({ name, email, password: hashed });
 
     
+    const message = "201 Created with user details";
+
+    
+    res.setHeader('X-Status-Message', message);
+
+    
+    res.statusMessage = 'Created with user details';
+
     return res.status(201).json({
-      message: "201 Created with user details",
+      message,
       success: true,
       data: {
         id:    user._id,
@@ -65,9 +73,12 @@ exports.login = async (req, res, next) => {
       { expiresIn: '8h' }
     );
 
-    
+    const message = "200 OK with JWT token";
+    res.setHeader('X-Status-Message', message);
+    res.statusMessage = 'OK with JWT token';
+
     return res.status(200).json({
-      message: "200 OK with JWT token",
+      message,
       success: true,
       token
     });
