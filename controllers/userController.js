@@ -17,7 +17,7 @@ exports.register = async (req, res, next) => {
     const hashed = await bcrypt.hash(password, 10);
     const user   = await User.create({ name, email, password: hashed });
 
-    const message = 'User Created with user details';
+    const message = ' Created with user details';
 
     
     res.setHeader('X-Status-Message', message);
